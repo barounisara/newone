@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='main.css'>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css'>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js'></script>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js'></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.min.js"></script>
+    
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>3iS Diffusion</title>
+	<link type="text/css" href="http://127.0.0.1/projects/diffusion/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link type="text/css" href="http://127.0.0.1/projects/diffusion/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+	<link type="text/css" href="http://127.0.0.1/projects/diffusion/css/theme.css" rel="stylesheet">
+	<link type="text/css" href="http://127.0.0.1/projects/diffusion/images/icons/css/font-awesome.css" rel="stylesheet">
+	<link type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
+    
+<style>
+</style>
+   <script>
+
+    //getXmlHttp opens connexion with the php server
+        function getXMLHttp()
+        {
+          var xmlHttp
+        
+          try
+          {
+            //Firefox, Opera 8.0+, Safari
+            xmlHttp = new XMLHttpRequest();
+          }
+          catch(e)
+          {
+            //Internet Explorer
+            try
+            {
+              xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
+            }
+            catch(e)
+            {
+              try
+              {
+                xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+              }
+              catch(e)
+              {
+                alert("Your browser does not support AJAX!")
+                return false;
+              }
+            }
+          }
+          return xmlHttp;
+        }
+        function MakeRequest()
+        {
+          var xmlHttp = getXMLHttp();
+          var login=$("#login").val();
+          var password=$("#password").val();
+          var params = "login="+login+"&password="+password;
+           xmlHttp.open("POST", "http://127.0.0.1/projects/diffusion/tvLogin.php", true); 
+           xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+           xmlHttp.setRequestHeader("Content-length", params.length);
+           
+          xmlHttp.onreadystatechange = function()
+          {
+            if(xmlHttp.readyState == 4)
+            {
+              HandleResponse(xmlHttp.responseText);
+            }
+          }
+        xmlHttp.send(params);
+        }
+        function HandleResponse(result)
+        {
+        	if(result=="success")
+        	connect();
+        }
+
+        function connect()
+        {
+            //redirection
+            var urlPath="http://127.0.0.1/projects/diffusion/administrateur/index.php";
+            window.location.href=urlPath;        
+
+            }
+    </script>
+</head>
+
+<body>
+    
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-inverse-collapse">
+					<i class="icon-reorder shaded"></i>
+				</a>
+
+			  	<a class="brand" href="index.html">
+			  		3iS Diffusion
+			  	</a>
+
+				<div class="nav-collapse collapse navbar-inverse-collapse">
+				</div><!-- /.nav-collapse -->
+			</div>
+		</div><!-- /navbar-inner -->
+	</div><!-- /navbar -->
+
+
+
+	<div class="wrapper">
+		<div class="container">
+			<div class="row">
+				<div class="module module-login span4 offset4">
+						<div class="module-head">
+							<h3>Authentification</h3>
+						</div>
+						<div class="module-body">
+							<div class="control-group">
+								<div class="controls row-fluid">
+									<input class="span12" type="text"  name="login" id="login" placeholder="Login">
+								</div>
+							</div>
+							<div class="control-group">
+								<div class="controls row-fluid">
+									<input class="span12" type="password" name="password" id="password" placeholder="Mot de passe">
+								</div>
+							</div>
+						</div>
+						<div class="module-foot">
+							<div class="control-group">
+								<div class="controls clearfix">
+									<button name="submit" onclick="MakeRequest();" class="btn btn-primary pull-right">Connexion</button>
+								</div>
+							</div>
+						</div>
+					
+				</div>
+			</div>
+		</div>
+	</div><!--/.wrapper-->
+
+	<div class="footer">
+		<div class="container">
+			 
+
+			<b class="copyright">&copy; 2015 3iS Enterprise Solution - 3iS.tn </b> All rights reserved.
+		</div>
+	</div>
+	<script src="scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+	<script src="scripts/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+	<script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+
+
+<script>
+//$("#submit").click:(function()
+// {
+//     $.ajax({
+//     	   url: 'http://127.0.0.1/projects/diffusion/tvLogin.php',
+//     	    type:'post',
+//     	     data:{ login:$("#login"),
+//     	     password:$("#password")},
+//     	    	success: function(output) {
+//     	    	HandleResponse(output);
+//     	                  }
+//     	});
+	
+//     	});
+</script>
+
+
+
+
+
+
+
+
+
+
+</body>
+
+
+</html>

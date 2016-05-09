@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="refresh" content="1800">
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='main.css'>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css'>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js'></script>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js'></script>
+    <script type="text/javascript" src="web/calculator.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.min.js"></script>
+    <script type="text/javascript" src="web/jquery.reveal.js"></script>
+    
+<style>
+
+    .carousel-inner > .item > img,
+  .carousel-inner > .item > a > img {
+      width: 70%;   
+      margin: auto;
+  }
+    .onoffswitch {
+    position:relative;
+    width:600px;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    margin-left:85px;
+}
+
+.onoffswitch-checkbox {
+    display:none;
+}
+
+.onoffswitch-label {
+    display:block;
+    overflow:hidden;
+    cursor:pointer;
+    border:0 solid #999999;
+    border-radius:25px;
+}
+
+.onoffswitch-inner {
+    width:200%;
+    margin-left:-100%;
+    -moz-transition:margin 0.3s ease-in 0s;
+    -webkit-transition:margin 0.3s ease-in 0s;
+    -o-transition:margin 0.3s ease-in 0s;
+    transition:margin 0.3s ease-in 0s;
+}
+
+.onoffswitch-inner > div {
+    float:left;
+    position:relative;
+    width:50%;
+    height:50px;
+    padding:0;
+    line-height:50px;
+    font-size:20px;
+    color:white;
+    font-family:Trebuchet,Arial,sans-serif;
+    font-weight:bold;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    box-sizing:border-box;
+}
+
+.onoffswitch-inner .onoffswitch-active {
+    padding-left:15px;
+    background-color:#C2C2C2;
+    color:#FFFFFF;
+}
+
+.onoffswitch-inner .onoffswitch-inactive {
+    padding-right:15px;
+    background-color:#C2C2C2;
+    color:#FFFFFF;
+    text-align:right;
+}
+
+.onoffswitch-switch {
+    width:300px;
+    margin:0;
+    text-align:center;
+    border:0 solid #999999;
+    border-radius:0;
+    position:absolute;
+    top:0;
+    bottom:0;
+}
+
+.onoffswitch-active .onoffswitch-switch {
+    background:#27A1CA;
+    left:0;
+     
+}
+
+.onoffswitch-inactive .onoffswitch-switch {
+    background:#27A1CA;
+    right:0;
+   
+}
+
+.onoffswitch-active .onoffswitch-switch:before {
+    content:"";
+    position:absolute;
+    top:0;
+    left:300px;
+    border-style:solid;
+    border-color:#27A1CA transparent transparent #27A1CA;
+    border-width:30px 10px;
+}
+
+.onoffswitch-inactive .onoffswitch-switch:before {
+    content:" ";
+    position:absolute;
+    top:0;
+    right:300px;
+    border-style:solid;
+    border-color:transparent #27A1CA #27A1CA transparent;
+    border-width:30px 10px;
+}
+
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+    margin-left:0;
+}
+#ResponseDiv{height:150%;}
+  
+</style>
+   <script>
+   //global variable: DO NOT CHANGE IT
+   var values=new Array();
+   
+	function getInput()
+	{
+		var input=document.getElementById("calc_resultat").value;
+		//read global array
+		var id=window.values[0];
+		var unity=window.values[1];
+		var buy=window.values[2];
+		var sell=window.values[3];
+		var responseDiv="<h2><center>\
+			<div id='responseDiv'></div>\
+			</center></h2>";
+		
+		if (document.getElementById('myonoffswitch2').checked) 
+			{
+				document.getElementById("conversionResult").innerHTML=responseDiv;
+				var resultVente=(input*unity)/sell;
+				var response="<center><span style='color:#2390B5;'>"+input+"</span>\
+				<span style='color:#515151;'> TND = </span><span style='color:#2390B5;'>"+resultVente.toFixed(4) +
+				 " </span><span style='color:#515151;'> "+id+"</span></center>";
+				document.getElementById("responseDiv").innerHTML=response;
+			}
+				else 
+					 {
+						document.getElementById("conversionResult").innerHTML=responseDiv;
+						var resultAchat=(input*buy)/unity;
+						var response="<center><span style='color:#2390B5;'>"+input+"</span><span style='color:#515151;'>\
+						 "+id+" = </span><span style='color:#2390B5;'>"+resultAchat.toFixed(4) + " </span>\
+						 <span style='color:#515151;'>TND</span></center>";
+						document.getElementById("responseDiv").innerHTML=response;
+					 }
+		document.getElementById("calc_resultat").value="";
+		//end GetInput()
+	}
+	
+    function getID(theLink){
+
+		var id=theLink.id;
+    	var unity=document.getElementById(theLink.id).getElementsByTagName("td")[3].textContent;
+    	var buy=document.getElementById(theLink.id).getElementsByTagName("td")[4].textContent;
+    	var sell=document.getElementById(theLink.id).getElementsByTagName("td")[5].textContent;
+    	//write variables to global array (values) 
+    	window.values[0]=id;
+    	window.values[1]=unity;
+    	window.values[2]=buy;
+    	window.values[3]=sell;
+ 		//this section adds the two buttons
+ 	
+	document.getElementById("choix").innerHTML="<div class='onoffswitch'>  \
+	 <input type='checkbox' name='onoffswitch' class='onoffswitch-checkbox' id='myonoffswitch2' checked>\
+	     <label class='onoffswitch-label' for='myonoffswitch2'>  \
+	     <div class='onoffswitch-inner'>  \
+	     <div class='onoffswitch-active'><div class='onoffswitch-switch'>Vente (par la banque) du "+id+"</div>\
+	     <div style='float:right;margin-right:20px;font-size:18px;'>Achat</div></div>  \
+	     <div class='onoffswitch-inactive'><div class='onoffswitch-switch'>Achat (par la banque) du "+id+"</div>\
+	     <div style='float:left;margin-left:20px;font-size:18px;'>Vente</div></div>  \
+	     </div></label></div> ";
+//     	document.getElementById("choix").innerHTML+="<div class='btn-group btn-group-lg' role='group'> \
+//         	        		<button type='button' class='btn btn-default btn-lg'> <label>\
+// 		       	    <input type='radio' name='blankRadio' id='tnd' value='0' class='radio'/>\
+// 		       	   Conversion de TND &agrave; "+id+"</label></button>";
+// 		       	  document.getElementById("choix").innerHTML+=" <button type='button'\
+// 		       		 class='btn btn-default btn-lg'><label>\
+// 		       	    <input type='radio' name='blankRadio' id='dev' value='1' class='radio'/>\
+// 		       	    Conversion du "+id+" &agrave; TND</label>\</button></div>";
+		//the next line clears results from previous queries
+	
+	document.getElementById("conversionResult").innerHTML="";
+		       	
+    }
+    //getXmlHttp opens connexion with the php server
+        function getXMLHttp()
+        {
+          var xmlHttp
+        
+          try
+          {
+            //Firefox, Opera 8.0+, Safari
+            xmlHttp = new XMLHttpRequest();
+          }
+          catch(e)
+          {
+            //Internet Explorer
+            try
+            {
+              xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
+            }
+            catch(e)
+            {
+              try
+              {
+                xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+              }
+              catch(e)
+              {
+                alert("Your browser does not support AJAX!")
+                return false;
+              }
+            }
+          }
+          return xmlHttp;
+        }
+        function MakeRequest()
+        {
+          var xmlHttp = getXMLHttp();
+        
+          xmlHttp.onreadystatechange = function()
+          {
+            if(xmlHttp.readyState == 4)
+            {
+              HandleResponse(xmlHttp.responseText);
+            }
+          }
+          //Change the url of the hoast
+          xmlHttp.open("GET", "http://127.0.0.1/projects/currency/new.php", true); 
+          xmlHttp.send(null);
+        }
+        function HandleResponse(result)
+        {
+        
+        	document.getElementById('ResponseDiv').innerHTML += result;
+        }
+// hides the light box after 3 minutes
+function hideme()
+{	
+	setTimeout(function(){ document.getElementById("light").style.display = 'none';
+	document.getElementById("myModal").style.display = 'none';},180000);
+	//returns the visibility for next click
+	document.getElementById("light").style.display = 'block';
+	document.getElementById("myModal").style.display = 'block';
+	}
+        
+    </script>
+</head>
+
+<body onLoad="MakeRequest();">
+    <div id='ResponseDiv' class="table-bordered" style="width:60%;float:left;">
+  
+    <img style= "display:block;" src='images/logo.gif' alt='ABC Bank'>
+    </div>
+    
+    <div class="container" style="width:40%; float:right">
+  <br>
+  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+   
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+
+      <div class="item active">
+        <img src="images/abc5.jpg" alt="ABC">
+        
+      </div>
+
+      <div class="item">
+        <img src="images/abc4.jpg" alt="ABC">
+        
+      </div>
+    
+      <div class="item">
+        <img src="images/abc3.jpg" alt="ABC" >
+        
+      </div>
+ 		<div class="item">
+        <img src="images/abc6.jpg" alt="ABC" >
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div id="light">
+    <div id="myModal" class="reveal-modal">
+  
+        <h1>Equivalence</h1>
+        <br>
+        <div id="choix"></div>
+                      <div id="conversionResult"></div>
+        <table class="calculatrice" id="calc">
+            <tr>
+                <td colspan="4" class="calc_td_resultat">
+               <div class="input-group input-group-lg">
+					  <span class="input-group-addon" id="sizing-addon1">$</span>
+					  <input type="text" class="form-control" name="calc_resultat" id="calc_resultat" placeholder="Montant">
+					</div>
+                  <!--   <input type="text" readonly="readonly" name="calc_resultat"
+                   id="calc_resultat" value="0" 
+                   class="calc_resultat" onkeydown="javascript:key_detect_calc('calc',event);" /> -->
+                </td>
+            </tr>
+            <tr>
+                <td class="calc_td_btn">
+                
+                    <button class="calc_btn"  onclick="javascript:f_calc('calc','ce');" >
+                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                </td>
+
+
+            </tr>
+            <tr>
+                <td class="calc_td_btn">
+                    <input type="button" class="calc_btn" value="7" onclick="javascript:add_calc('calc',7);" />
+                </td>
+                <td class="calc_td_btn">
+                    <input type="button" class="calc_btn" value="8" onclick="javascript:add_calc('calc',8);" />
+                </td>
+                <td class="calc_td_btn">
+                    <input type="button" class="calc_btn" value="9" onclick="javascript:add_calc('calc',9);" />
+                </td>
+
+            </tr>
+            <tr>
+                <td class="calc_td_btn">
+                    <input type="button" class="calc_btn" value="4" onclick="javascript:add_calc('calc',4);" />
+                </td>
+                <td class="calc_td_btn">
+                    <input type="button" class="calc_btn" value="5" onclick="javascript:add_calc('calc',5);" />
+                </td>
+                <td class="calc_td_btn">
+                    <input type="button" class="calc_btn" value="6" onclick="javascript:add_calc('calc',6);" />
+                </td>
+
+            </tr>
+            <tr>
+                <td class="calc_td_btn">
+                    <input type="button" class="calc_btn" value="1" onclick="javascript:add_calc('calc',1);" />
+                </td>
+                <td class="calc_td_btn">
+                    <input type="button" class="calc_btn" value="2" onclick="javascript:add_calc('calc',2);" />
+                </td>
+                <td class="calc_td_btn">
+                    <input type="button" class="calc_btn" value="3" onclick="javascript:add_calc('calc',3);" />
+                </td>
+
+            </tr>
+            <tr>
+                <td class="calc_td_btn">
+                    <input type="button" class="calc_btn" value="0" onclick="javascript:add_calc('calc',0);" />
+                </td>
+
+                <td class="calc_td_btn">
+                    <input type="button" class="calc_btn" value="," onclick="javascript:add_calc('calc','.');" />
+                </td>
+                <td class="calc_td_btn">
+                    <button class="calc_btn" value="=" onclick="javascript:getInput();">
+                    
+                     <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </button>
+                </td>
+            </tr>
+        </table>
+        <script type="text/javascript">
+            document.getElementById('calc').onload=initialiser_calc('calc');
+        </script>
+
+
+
+        <a class="close-reveal-modal">&#215;</a>
+    </div>
+   </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+
+</html>
